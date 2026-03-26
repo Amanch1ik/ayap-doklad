@@ -1,0 +1,981 @@
+<!doctype html>
+<html lang="ky">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Доклад: Ишкердүүлүктүн бизнес-процесстерин моделдөө. Теория, BPMN, IDEF0 методологиялары, практикалык колдонуу."
+    />
+    <title>Ишкердүүлүктүн бизнес-процесстерин моделдөө</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      @media print {
+        .sidebar, .topbar, .progress-wrap, .hero__btn { display: none !important; }
+        .main { margin-left: 0 !important; }
+        .hero { min-height: auto !important; padding: 40px 20px !important; }
+        .section { page-break-inside: avoid; }
+        .section-img img { max-width: 100% !important; height: auto !important; }
+        .anim-up { opacity: 1 !important; transform: none !important; }
+        body { font-size: 12pt; }
+        .hero__bg-img { display: none !important; }
+        .hero__overlay { display: none !important; }
+        .hero { background: #f0f4ff !important; color: #1a1a2e !important; }
+        .hero__title, .hero__sub, .hero__info { color: #1a1a2e !important; }
+        .hero__badge { background: #4361ee !important; color: white !important; }
+        * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress-wrap">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <nav class="sidebar" id="sidebar">
+      <div class="sidebar__brand">
+        <i class="fa-solid fa-diagram-project"></i>
+        <span>BPM</span>
+      </div>
+      <ul class="sidebar__menu">
+        <li>
+          <a href="#hero" class="active"
+            ><i class="fa-solid fa-house"></i><span>Башкы бет</span></a
+          >
+        </li>
+        <li>
+          <a href="#intro"
+            ><i class="fa-solid fa-book-open"></i><span>Киришүү</span></a
+          >
+        </li>
+        <li>
+          <a href="#theory"
+            ><i class="fa-solid fa-lightbulb"></i><span>БП теориясы</span></a
+          >
+        </li>
+        <li>
+          <a href="#types"
+            ><i class="fa-solid fa-layer-group"></i><span>БП түрлөрү</span></a
+          >
+        </li>
+        <li>
+          <a href="#methods"
+            ><i class="fa-solid fa-compass-drafting"></i
+            ><span>Методологиялар</span></a
+          >
+        </li>
+        <li>
+          <a href="#tools"
+            ><i class="fa-solid fa-screwdriver-wrench"></i
+            ><span>Куралдар</span></a
+          >
+        </li>
+        <li>
+          <a href="#practice"
+            ><i class="fa-solid fa-building"></i><span>Практика</span></a
+          >
+        </li>
+        <li>
+          <a href="#bpmn"
+            ><i class="fa-solid fa-project-diagram"></i
+            ><span>BPMN-моделдер</span></a
+          >
+        </li>
+        <li>
+          <a href="#optimize"
+            ><i class="fa-solid fa-rocket"></i><span>Оптималдаштыруу</span></a
+          >
+        </li>
+        <li>
+          <a href="#conclusion"
+            ><i class="fa-solid fa-flag-checkered"></i
+            ><span>Жыйынтык</span></a
+          >
+        </li>
+        <li>
+          <a href="#references"
+            ><i class="fa-solid fa-book"></i><span>Адабияттар</span></a
+          >
+        </li>
+      </ul>
+    </nav>
+    <div class="topbar" id="topbar">
+      <button class="topbar__toggle" id="menuToggle">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <span class="topbar__title">БП моделдөө</span>
+    </div>
+    <main class="main">
+      <section class="hero" id="hero">
+        <div class="hero__bg-img"></div>
+        <div class="hero__overlay"></div>
+        <div class="container hero__inner">
+          <div class="hero__badge anim-up">Доклад</div>
+          <h1 class="hero__title anim-up d1">
+            Ишкердүүлүктүн<br />бизнес-процесстерин<br /><span class="accent"
+              >моделдөө</span
+            >
+          </h1>
+          <p class="hero__sub anim-up d2">
+            Теориялык негиздер, методологиялар жана практикалык колдонуу<br />«City House» курулуш уюмунун мисалында
+          </p>
+          <div class="hero__info anim-up d3">
+            <div class="hero__info-item">
+              <i class="fa-solid fa-graduation-cap"></i>
+              <div>
+                <small>Багыт</small
+                ><strong>Прикладная информатика</strong>
+              </div>
+            </div>
+            <div class="hero__info-item">
+              <i class="fa-solid fa-location-dot"></i>
+              <div><small>Шаар</small><strong>Бишкек, 2025</strong></div>
+            </div>
+          </div>
+          <a href="#intro" class="hero__btn anim-up d4">
+            Баштоо <i class="fa-solid fa-chevron-down"></i>
+          </a>
+        </div>
+      </section>
+      <section class="section" id="intro">
+        <div class="container container--narrow">
+          <div class="sec-head anim-up">
+            <span class="sec-num">01</span>
+            <h2 class="sec-title">Киришүү</h2>
+            <p class="sec-desc">Теманын актуалдуулугу жана изилдөөнүн максаттары</p>
+          </div>
+          <div class="section-img anim-up">
+              <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=900&h=400&fit=crop" alt="Бизнес-пландоо жана анализ">
+              <p class="img-caption">Бизнес-процесстерди анализдөө жана пландоо</p>
+          </div>
+          <div class="content-block anim-up d1">
+            <h3>Актуалдуулугу</h3>
+            <p>
+              Тез өзгөрүп жаткан рыноктун шарттарында бизнес-процесстерди эффективдүү башкаруу ишканалардын атаандаштыкка жөндөмдүүлүгүнүн негизги фактору болуп калууда. Бизнес-процесстерди моделдөө уюмдун ишмердүүлүгүн визуалдаштырууга, анализдөөгө жана оптималдаштырууга мүмкүнчүлүк берет, бул өзгөчө курулуш тармагында маанилүү, анткени көптөгөн бөлүмдөрдүн жана подрядчиктердин өз ара аракеттенүүсү татаал байланыштар системасын түзөт.
+            </p>
+            <p>
+              Бизнес-процесстердин кандай иштешин жана аларды кантип жакшыртууга болорун түшүнүү маалыматтык системалар жана технологиялар тармагындагы адистер үчүн зарыл көндүм болуп саналат.
+            </p>
+          </div>
+          <div class="goals-grid anim-up d2">
+            <div class="goal-card">
+              <div class="goal-card__icon">
+                <i class="fa-solid fa-bullseye"></i>
+              </div>
+              <h4>Максат</h4>
+              <p>
+                Бизнес-процесстерди моделдөөнүн теориялык негиздерин изилдөө жана алынган билимдерди реалдуу курулуш уюмунун мисалында практикалык колдонуу.
+              </p>
+            </div>
+            <div class="goal-card">
+              <div class="goal-card__icon">
+                <i class="fa-solid fa-list-check"></i>
+              </div>
+              <h4>Милдеттер</h4>
+              <ul>
+                <li>Бизнес-процесстердин түшүнүгүн жана классификациясын изилдөө</li>
+                <li>Моделдөөнүн негизги методологияларын карап чыгуу</li>
+                <li>«City House» компаниясынын бизнес-процесстерин анализдөө</li>
+                <li>As-Is жана To-Be моделдерин иштеп чыгуу</li>
+                <li>Оптималдаштыруу боюнча сунуштарды берүү</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="section section--alt" id="theory">
+        <div class="container container--narrow">
+          <div class="sec-head anim-up">
+            <span class="sec-num">02</span>
+            <h2 class="sec-title">Теориялык негиздер</h2>
+            <p class="sec-desc">
+              Бизнес-процесс деген эмне жана аны эмне үчүн моделдөө керек
+            </p>
+          </div>
+          <div class="quote-block anim-up d1">
+            <i class="fa-solid fa-quote-left quote-block__icon"></i>
+            <blockquote>
+              Бизнес-процесс — бул керектөөчүлөр үчүн белгилүү бир продукт же кызмат түзүүгө багытталган өз ара байланышкан аракеттердин же тапшырмалардын жыйындысы.
+            </blockquote>
+            <cite>— М. Хаммер, Дж. Чампи «Корпорацияны реинжиниринг кылуу»</cite>
+          </div>
+          <div class="section-img anim-up d1">
+              <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=900&h=400&fit=crop" alt="Маалыматтарды жана процесстерди визуалдаштыруу">
+              <p class="img-caption">Бизнес-процесстерди визуалдаштыруу жана аналитика</p>
+          </div>
+          <div class="content-block anim-up d2">
+            <h3>Негизги түшүнүктөр</h3>
+            <p>
+              Бизнес-процесстерди моделдөө (Business Process Modeling) — бул уюмдун процесстерин формалдаштырылган түрдө сүрөттөө ишмердүүлүгү. Процесстин модели анын графикалык жана/же тексттик көрсөтүлүшү болуп, төмөнкүлөргө мүмкүнчүлүк берет:
+            </p>
+          </div>
+          <div class="features-grid anim-up d2">
+            <div class="feature">
+              <div class="feature__icon"><i class="fa-solid fa-eye"></i></div>
+              <h4>Визуалдаштыруу</h4>
+              <p>
+                Операциялардын ырааттуулугун, маалымат жана ресурстар агымдарын көрүнүктүү көрүү
+              </p>
+            </div>
+            <div class="feature">
+              <div class="feature__icon">
+                <i class="fa-solid fa-magnifying-glass-chart"></i>
+              </div>
+              <h4>Анализдөө</h4>
+              <p>
+                Тар жерлерди, функциялардын кайталанышын жана эффективсиз этаптарды аныктоо
+              </p>
+            </div>
+            <div class="feature">
+              <div class="feature__icon">
+                <i class="fa-solid fa-arrows-spin"></i>
+              </div>
+              <h4>Оптималдаштыруу</h4>
+              <p>
+                Процесстердин жакшыртылган варианттарын иштеп чыгуу жана өзгөртүүлөрдү киргизүү
+              </p>
+            </div>
+            <div class="feature">
+              <div class="feature__icon"><i class="fa-solid fa-robot"></i></div>
+              <h4>Автоматташтыруу</h4>
+              <p>МС жардамы менен автоматташтырууга тийиш болгон процесстерди аныктоо</p>
+            </div>
+          </div>
+          <div class="content-block anim-up d3">
+            <h3>Ишкердүүлүктө БП моделдөө эмне үчүн керек?</h3>
+            <p>
+              Ишкердүүлүктө бизнес-процесстерди моделдөө өзгөчө ролду ойнойт. Ишкерлер көп учурда компаниянын хаостуу өсүшүнө туш болушат, мында процесстер стихиялуу түрдө калыптанат. Моделдөө төмөнкүлөргө мүмкүнчүлүк берет:
+            </p>
+            <ul class="check-list">
+              <li>
+                <i class="fa-solid fa-circle-check"></i> Ишмердүүлүктү стандартташтыруу жана конкреттүү кызматкерлерге көз карандылыкты азайтуу
+              </li>
+              <li>
+                <i class="fa-solid fa-circle-check"></i> Ашыкча операцияларды жоюу аркылуу чыгымдарды кыскартуу
+              </li>
+              <li>
+                <i class="fa-solid fa-circle-check"></i> Негизги чекиттерди контролдоо аркылуу продукция/кызмат сапатын жогорулатуу
+              </li>
+              <li>
+                <i class="fa-solid fa-circle-check"></i> Формалдаштырылган процесстерди жаңы бөлүмдөргө өткөрүп, бизнести масштабдоо
+              </li>
+              <li>
+                <i class="fa-solid fa-circle-check"></i> Маалыматтык системаларды (ERP, CRM) киргизүү үчүн негиз даярдоо
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+      <section class="section" id="types">
+        <div class="container">
+          <div class="sec-head anim-up">
+            <span class="sec-num">03</span>
+            <h2 class="sec-title">Бизнес-процесстердин классификациясы</h2>
+            <p class="sec-desc">
+              Негизги, көмөкчү жана башкаруу процесстери
+            </p>
+          </div>
+          <div class="section-img section-img--wide anim-up">
+              <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1100&h=350&fit=crop" alt="Курулуш процесси">
+              <p class="img-caption">Курулуш процесси көптөгөн өз ара байланышкан бизнес-процесстерди камтыйт</p>
+          </div>
+          <div class="types-grid">
+            <div class="type-card type-card--primary anim-up d1">
+              <div class="type-card__header">
+                <i class="fa-solid fa-star"></i>
+                <h3>Негизги процесстер</h3>
+              </div>
+              <p>
+                Кардар үчүн түздөн-түз баалуулук түзүп, уюмга киреше алып келет.
+              </p>
+              <ul>
+                <li>
+                  <i class="fa-solid fa-angle-right"></i> Объекттерди долбоорлоо
+                </li>
+                <li>
+                  <i class="fa-solid fa-angle-right"></i> Курулуш-монтаж иштери
+                </li>
+                <li>
+                  <i class="fa-solid fa-angle-right"></i> Объектти тапшырыкчыга тапшыруу
+                </li>
+                <li>
+                  <i class="fa-solid fa-angle-right"></i> Батирлерди/жайларды сатуу
+                </li>
+              </ul>
+            </div>
+            <div class="type-card type-card--support anim-up d2">
+              <div class="type-card__header">
+                <i class="fa-solid fa-gear"></i>
+                <h3>Көмөкчү процесстер</h3>
+              </div>
+              <p>
+                Негизги процесстердин иштешин камсыз кылат жана инфраструктураны колдойт.
+              </p>
+              <ul>
+                <li>
+                  <i class="fa-solid fa-angle-right"></i> Материалдарды сатып алуу
+                </li>
+                <li>
+                  <i class="fa-solid fa-angle-right"></i> Техниканы тейлөө
+                </li>
+                <li><i class="fa-solid fa-angle-right"></i> IT-колдоо</li>
+                <li>
+                  <i class="fa-solid fa-angle-right"></i> Бухгалтердик эсеп
+                </li>
+              </ul>
+            </div>
+            <div class="type-card type-card--manage anim-up d3">
+              <div class="type-card__header">
+                <i class="fa-solid fa-chess-king"></i>
+                <h3>Башкаруу процесстери</h3>
+              </div>
+              <p>
+                Бүт уюмдун ишмердүүлүгүн координациялайт, стратегияны жана контролду аныктайт.
+              </p>
+              <ul>
+                <li>
+                  <i class="fa-solid fa-angle-right"></i> Стратегиялык пландоо
+                </li>
+                <li>
+                  <i class="fa-solid fa-angle-right"></i> Сапатты башкаруу
+                </li>
+                <li>
+                  <i class="fa-solid fa-angle-right"></i> Аткарууну контролдоо
+                </li>
+                <li>
+                  <i class="fa-solid fa-angle-right"></i> Тобокелдиктерди башкаруу
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="section section--alt" id="methods">
+        <div class="container">
+          <div class="sec-head anim-up">
+            <span class="sec-num">04</span>
+            <h2 class="sec-title">Моделдөө методологиялары</h2>
+            <p class="sec-desc">
+              Процесстерди сүрөттөөнүн стандартташтырылган ыкмалары
+            </p>
+          </div>
+          <div class="methods-grid">
+            <div class="method-card anim-up d1">
+              <div class="method-card__badge">Эң популярдуу</div>
+              <div class="method-card__icon">
+                <i class="fa-solid fa-diagram-project"></i>
+              </div>
+              <h3>BPMN 2.0</h3>
+              <p class="method-card__full">
+                Business Process Model and Notation
+              </p>
+              <p>
+                Бизнес-процесстерди моделдөө үчүн графикалык стандарт. Бирдиктүү символдорду колдонот: окуялар, аракеттер, шлюздар, агымдар. IT жана башкарууда кеңири колдонулат.
+              </p>
+              <div class="method-card__tags">
+                <span>Иш агымдары</span>
+                <span>Шлюздар</span>
+                <span>Пулдар</span>
+              </div>
+            </div>
+            <div class="method-card anim-up d2">
+              <div class="method-card__icon">
+                <i class="fa-solid fa-sitemap"></i>
+              </div>
+              <h3>IDEF0</h3>
+              <p class="method-card__full">
+                Integration DEFinition Function Modeling
+              </p>
+              <p>
+                Функционалдык моделдөө методологиясы. Системаны кирүүлөрү, чыгуулары, башкаруусу жана механизмдери (ICOM) менен өз ара байланышкан функциялардын жыйындысы катары сүрөттөйт.
+              </p>
+              <div class="method-card__tags">
+                <span>Функциялар</span>
+                <span>ICOM</span>
+                <span>Декомпозиция</span>
+              </div>
+            </div>
+            <div class="method-card anim-up d3">
+              <div class="method-card__icon">
+                <i class="fa-solid fa-circle-nodes"></i>
+              </div>
+              <h3>EPC</h3>
+              <p class="method-card__full">Event-driven Process Chain</p>
+              <p>
+                Окуяларга негизделген нотация. Ар бир чынжыр окуя менен башталып, окуя менен аяктайт. ARIS методологиясында жана SAP системаларында кеңири колдонулат.
+              </p>
+              <div class="method-card__tags">
+                <span>Окуялар</span>
+                <span>Функциялар</span>
+                <span>SAP/ARIS</span>
+              </div>
+            </div>
+            <div class="method-card anim-up d4">
+              <div class="method-card__icon">
+                <i class="fa-solid fa-share-nodes"></i>
+              </div>
+              <h3>DFD</h3>
+              <p class="method-card__full">Data Flow Diagram</p>
+              <p>
+                Маалымат агымдарынын диаграммалары. Маалыматтардын процесстер, сактагычтар жана тышкы сущностьтар арасында кандай жылаарын көрсөтөт. МСди долбоорлоо үчүн пайдалуу.
+              </p>
+              <div class="method-card__tags">
+                <span>Маалыматтар</span>
+                <span>Агымдар</span>
+                <span>Сактагычтар</span>
+              </div>
+            </div>
+          </div>
+          <div class="table-wrap anim-up d3">
+            <h3 class="table-title">Методологияларды салыштыруу</h3>
+            <div class="table-scroll">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Критерий</th>
+                    <th>BPMN 2.0</th>
+                    <th>IDEF0</th>
+                    <th>EPC</th>
+                    <th>DFD</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Фокус</td>
+                    <td>Иш агымдары</td>
+                    <td>Системанын функциялары</td>
+                    <td>Окуялар чынжыры</td>
+                    <td>Маалымат агымдары</td>
+                  </tr>
+                  <tr>
+                    <td>Өздөштүрүүнүн татаалдыгы</td>
+                    <td>Орточо</td>
+                    <td>Төмөн</td>
+                    <td>Орточо</td>
+                    <td>Төмөн</td>
+                  </tr>
+                  <tr>
+                    <td>Стандартташтыруу</td>
+                    <td>ISO 19510</td>
+                    <td>FIPS 183</td>
+                    <td>ARIS</td>
+                    <td>Гейн/Сарсон</td>
+                  </tr>
+                  <tr>
+                    <td>ITде колдонуу</td>
+                    <td>Жогорку</td>
+                    <td>Орточо</td>
+                    <td>Жогорку</td>
+                    <td>Жогорку</td>
+                  </tr>
+                  <tr>
+                    <td>Автоматташтыруу</td>
+                    <td>Ооба (BPMS)</td>
+                    <td>Жок</td>
+                    <td>Жарым-жартылай</td>
+                    <td>Жок</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="section" id="tools">
+        <div class="container">
+          <div class="sec-head anim-up">
+            <span class="sec-num">05</span>
+            <h2 class="sec-title">Моделдөө куралдары</h2>
+            <p class="sec-desc">
+              Моделдерди түзүү үчүн популярдуу программалык камсыздоо
+            </p>
+          </div>
+          <div class="tools-grid">
+            <div class="tool-card anim-up d1">
+              <div class="tool-card__logo">
+                <i class="fa-solid fa-pen-ruler"></i>
+              </div>
+              <h4>Bizagi Modeler</h4>
+              <p>
+                Интуитивдүү интерфейси жана процесстерди симуляциялоо мүмкүнчүлүгү бар BPMN-моделдөө үчүн акысыз курал.
+              </p>
+              <span class="tool-tag">BPMN</span>
+            </div>
+            <div class="tool-card anim-up d2">
+              <div class="tool-card__logo">
+                <i class="fa-solid fa-network-wired"></i>
+              </div>
+              <h4>ARIS Express</h4>
+              <p>
+                EPC, BPMN, уюштуруу диаграммалары нотацияларында моделдөө куралы. Software AG компаниясы тарабынан иштелип чыккан.
+              </p>
+              <span class="tool-tag">EPC / BPMN</span>
+            </div>
+            <div class="tool-card anim-up d3">
+              <div class="tool-card__logo">
+                <i class="fa-solid fa-draw-polygon"></i>
+              </div>
+              <h4>Draw.io (Diagrams.net)</h4>
+              <p>
+                Акысыз онлайн-диаграмма редактору. BPMN, UML, IDEF0 жана башка нотацияларды колдойт. Браузерде иштейт.
+              </p>
+              <span class="tool-tag">Универсалдуу</span>
+            </div>
+            <div class="tool-card anim-up d4">
+              <div class="tool-card__logo">
+                <i class="fa-brands fa-microsoft"></i>
+              </div>
+              <h4>Microsoft Visio</h4>
+              <p>
+                Визуалдаштыруу үчүн профессионалдуу курал. BPMN жана блок-схемаларды кошо алганда, көптөгөн шаблондорду колдойт.
+              </p>
+              <span class="tool-tag">BPMN / UML</span>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="section section--alt" id="practice">
+        <div class="container">
+          <div class="sec-head anim-up">
+            <span class="sec-num">06</span>
+            <h2 class="sec-title">Практикалык колдонуу</h2>
+            <p class="sec-desc">«City House» компаниясынын бизнес-процесстерин анализдөө</p>
+          </div>
+          <div class="section-img section-img--wide anim-up d1">
+              <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1100&h=400&fit=crop" alt="Курулуш аянтчасы">
+              <p class="img-caption">«City House» компаниясынын курулуш аянтчасы</p>
+          </div>
+          <div class="company-overview anim-up d1">
+            <div class="company-overview__text">
+              <h3><i class="fa-solid fa-helmet-safety"></i> «City House»</h3>
+              <p>
+                Кыргыз Республикасынын аймагында 2010-жылдан бери иш алып барган курулуш компаниясы. Турак жай жана коммерциялык объекттерди курууга адистешкен.
+              </p>
+              <div class="mini-stats">
+                <div><strong>15</strong><span>жыл рынокто</span></div>
+                <div><strong>50+</strong><span>долбоор</span></div>
+                <div><strong>80+</strong><span>кызматкер</span></div>
+              </div>
+            </div>
+          </div>
+          <h3 class="sub-heading anim-up d2">
+            <i class="fa-solid fa-sitemap"></i> Уюштуруу структурасы
+          </h3>
+          <div class="org-tree anim-up d2">
+            <div class="org-root">
+              <i class="fa-solid fa-user-tie"></i>
+              <span>Башкы директор</span>
+            </div>
+            <div class="org-line"></div>
+            <div class="org-row">
+              <div class="org-leaf">
+                <i class="fa-solid fa-compass-drafting"></i
+                ><span>Долбоорлоо</span>
+              </div>
+              <div class="org-leaf">
+                <i class="fa-solid fa-helmet-safety"></i
+                ><span>Курулуш бөлүмү</span>
+              </div>
+              <div class="org-leaf">
+                <i class="fa-solid fa-calculator"></i><span>Бухгалтерия</span>
+              </div>
+              <div class="org-leaf">
+                <i class="fa-solid fa-truck-fast"></i><span>Камсыздоо</span>
+              </div>
+              <div class="org-leaf">
+                <i class="fa-solid fa-server"></i><span>IT-бөлүм</span>
+              </div>
+            </div>
+          </div>
+          <h3 class="sub-heading anim-up d3">
+            <i class="fa-solid fa-gears"></i> Негизги бизнес-процесстер
+          </h3>
+          <div class="process-timeline">
+            <div class="process-step anim-up d1">
+              <div class="process-step__num">1</div>
+              <div class="process-step__body">
+                <h4>Демилгелөө жана долбоорлоо</h4>
+                <p>
+                  Тапшырыкчынын талаптарын чогултуу, архитектуралык чиймелерди иштеп чыгуу, долбоорду мамлекеттик органдар менен макулдашуу, курулушка уруксат алуу.
+                </p>
+              </div>
+            </div>
+            <div class="process-step anim-up d2">
+              <div class="process-step__num">2</div>
+              <div class="process-step__body">
+                <h4>Камсыздоо жана сатып алуу</h4>
+                <p>
+                  Материалдарга өтүнмөлөрдү калыптандыруу, жеткирүүчүлөр арасында тендер өткөрүү, келишим түзүү, логистиканы жана кампада сактоону уюштуруу.
+                </p>
+              </div>
+            </div>
+            <div class="process-step anim-up d3">
+              <div class="process-step__num">3</div>
+              <div class="process-step__body">
+                <h4>Курулуш-монтаж иштери</h4>
+                <p>
+                  Аянтчаны даярдоо, пайдубал куюу, конструкцияларды тургузуу, инженердик тармактарды тартуу (суу түтүгү, электр, жылытуу), кара жана таза оңдоо.
+                </p>
+              </div>
+            </div>
+            <div class="process-step anim-up d4">
+              <div class="process-step__num">4</div>
+              <div class="process-step__body">
+                <h4>Сапатты контролдоо</h4>
+                <p>
+                  Иштердин курулуш ченемдерине (СНиП) шайкеш келишин текшерүү, инспекция өткөрүү, материалдарды лабораториялык анализдөө, кемчиликтерди жоюу.
+                </p>
+              </div>
+            </div>
+            <div class="process-step anim-up d5">
+              <div class="process-step__num">5</div>
+              <div class="process-step__body">
+                <h4>Объектти тапшыруу</h4>
+                <p>
+                  Мамлекеттик кабыл алуу, аткарылган иштердин актыларына кол коюу, документацияны жана ачкычтарды тапшырыкчыга өткөрүп берүү, кепилдик тейлөө.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="section" id="bpmn">
+        <div class="container">
+          <div class="sec-head anim-up">
+            <span class="sec-num">07</span>
+            <h2 class="sec-title">Процесстердин BPMN-моделдери</h2>
+            <p class="sec-desc">
+              Материалдарды сатып алуу процессин моделдөө: «Азыр кандай» жана «Кандай болот»
+            </p>
+          </div>
+          <div class="models-compare">
+            <div class="model-block anim-up d1">
+              <div class="model-block__head model-block__head--warn">
+                <i class="fa-regular fa-clock"></i>
+                <h3>«Азыр кандай» модели (As-Is)</h3>
+              </div>
+              <div class="model-block__body">
+                <p>
+                  Курулуш материалдарын сатып алуунун учурдагы процесси кагаз документ жүгүртүүнүн жана кол менен макулдашууну басымдуулугу менен мүнөздөлөт.
+                </p>
+                <div class="bpmn-flow">
+                  <div class="bpmn-event bpmn-event--start">
+                    <i class="fa-solid fa-circle"></i
+                    ><span>Материалга муктаждык</span>
+                  </div>
+                  <div class="bpmn-connector">
+                    <i class="fa-solid fa-arrow-right"></i>
+                  </div>
+                  <div class="bpmn-task">
+                    <i class="fa-regular fa-file-lines"></i
+                    ><span>Прораб өтүнмө жазат (кагаз)</span>
+                  </div>
+                  <div class="bpmn-connector">
+                    <i class="fa-solid fa-arrow-right"></i>
+                  </div>
+                  <div class="bpmn-task">
+                    <i class="fa-solid fa-person-walking"></i
+                    ><span>Курьер офиске жеткирет</span>
+                  </div>
+                  <div class="bpmn-connector">
+                    <i class="fa-solid fa-arrow-right"></i>
+                  </div>
+                  <div class="bpmn-gateway">
+                    <i class="fa-solid fa-diamond"></i><span>Бекитүү?</span>
+                  </div>
+                  <div class="bpmn-connector">
+                    <i class="fa-solid fa-arrow-right"></i>
+                  </div>
+                  <div class="bpmn-task">
+                    <i class="fa-solid fa-phone"></i
+                    ><span>Камсыздоочу жеткирүүчүлөргө чалат</span>
+                  </div>
+                  <div class="bpmn-connector">
+                    <i class="fa-solid fa-arrow-right"></i>
+                  </div>
+                  <div class="bpmn-event bpmn-event--end">
+                    <i class="fa-regular fa-circle"></i
+                    ><span>Объектке жеткирүү</span>
+                  </div>
+                </div>
+                <div class="problem-list">
+                  <h4>
+                    <i class="fa-solid fa-triangle-exclamation"></i> Аныкталган
+                    көйгөйлөр
+                  </h4>
+                  <ul class="custom-list">
+                    <li>
+                      <i class="fa-solid fa-xmark icon-danger"></i> Макулдашуу циклинин узактыгы (2-3 күн)
+                    </li>
+                    <li>
+                      <i class="fa-solid fa-xmark icon-danger"></i> Кагаз документтердин жоголуу тобокелдиги
+                    </li>
+                    <li>
+                      <i class="fa-solid fa-xmark icon-danger"></i>
+                      Өтүнмөнүн статусун көзөмөлдөө мүмкүн эмес
+                    </li>
+                    <li>
+                      <i class="fa-solid fa-xmark icon-danger"></i> Бирдиктүү база жоктугунан сатып алуулардын кайталанышы
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="model-block anim-up d2">
+              <div class="model-block__head model-block__head--success">
+                <i class="fa-solid fa-bolt"></i>
+                <h3>«Кандай болот» модели (To-Be)</h3>
+              </div>
+              <div class="model-block__body">
+                <p>
+                  Сунушталып жаткан модель корпоративдик өтүнмө порталын жана электрондук документ жүгүртүүнү киргизүүнү караштырат.
+                </p>
+                <div class="bpmn-flow bpmn-flow--success">
+                  <div class="bpmn-event bpmn-event--start">
+                    <i class="fa-solid fa-circle"></i
+                    ><span>Материалга муктаждык</span>
+                  </div>
+                  <div class="bpmn-connector">
+                    <i class="fa-solid fa-arrow-right"></i>
+                  </div>
+                  <div class="bpmn-task">
+                    <i class="fa-solid fa-laptop"></i
+                    ><span>Портал аркылуу өтүнмө</span>
+                  </div>
+                  <div class="bpmn-connector">
+                    <i class="fa-solid fa-arrow-right"></i>
+                  </div>
+                  <div class="bpmn-task">
+                    <i class="fa-solid fa-bell"></i
+                    ><span>Жетекчиге авто-кабарлоо</span>
+                  </div>
+                  <div class="bpmn-connector">
+                    <i class="fa-solid fa-arrow-right"></i>
+                  </div>
+                  <div class="bpmn-gateway">
+                    <i class="fa-solid fa-diamond"></i><span>ЭЦК?</span>
+                  </div>
+                  <div class="bpmn-connector">
+                    <i class="fa-solid fa-arrow-right"></i>
+                  </div>
+                  <div class="bpmn-task">
+                    <i class="fa-solid fa-cart-shopping"></i
+                    ><span>Текшерилген жеткирүүчүлөрдөн авто-сатып алуу</span>
+                  </div>
+                  <div class="bpmn-connector">
+                    <i class="fa-solid fa-arrow-right"></i>
+                  </div>
+                  <div class="bpmn-event bpmn-event--end">
+                    <i class="fa-regular fa-circle"></i
+                    ><span>Жеткирүү + GPS-трекинг</span>
+                  </div>
+                </div>
+                <div class="success-list">
+                  <h4><i class="fa-solid fa-circle-check"></i> Артыкчылыктары</h4>
+                  <ul class="custom-list">
+                    <li>
+                      <i class="fa-solid fa-check icon-success"></i>
+                      1-2 сааттын ичинде макулдашуу
+                    </li>
+                    <li>
+                      <i class="fa-solid fa-check icon-success"></i> Толук
+                      ачыктык жана көзөмөлдөө
+                    </li>
+                    <li>
+                      <i class="fa-solid fa-check icon-success"></i> Документтердин электрондук архиви
+                    </li>
+                    <li>
+                      <i class="fa-solid fa-check icon-success"></i> Реалдуу убакытта чыгымдарды аналитикалоо
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="section section--alt" id="optimize">
+        <div class="container container--narrow">
+          <div class="sec-head anim-up">
+            <span class="sec-num">08</span>
+            <h2 class="sec-title">Оптималдаштыруу боюнча сунуштар</h2>
+            <p class="sec-desc">
+              «City House» компаниясынын бизнес-процесстерин жакшыртуу боюнча сунуштар
+            </p>
+          </div>
+          <div class="rec-list">
+            <div class="rec-item anim-up d1">
+              <div class="rec-item__icon">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+              </div>
+              <div class="rec-item__body">
+                <h4>Булуттук ERP-системаны киргизүү</h4>
+                <p>
+                  Материалдарды, финансыларды жана долбоорлорду эсепке алууну бирдиктүү булуттук системага өткөрүү. Бул каалаган түзмөктөн маалыматтарга жетүүнү камсыз кылып, отчеттуулукка кеткен убакытты кыскартат.
+                </p>
+              </div>
+            </div>
+            <div class="rec-item anim-up d2">
+              <div class="rec-item__icon">
+                <i class="fa-solid fa-file-signature"></i>
+              </div>
+              <div class="rec-item__body">
+                <h4>Электрондук документ жүгүртүү (ЭДЖ)</h4>
+                <p>
+                  Кагаз өтүнмөлөрдү, актыларды жана келишимдерди ЭЦК колдонуу менен электрондукка алмаштыруу. Макулдашуу убактысын 70%га кыскартуу күтүлүүдө.
+                </p>
+              </div>
+            </div>
+            <div class="rec-item anim-up d3">
+              <div class="rec-item__icon">
+                <i class="fa-solid fa-mobile-screen-button"></i>
+              </div>
+              <div class="rec-item__body">
+                <h4>Прорабдар үчүн мобилдик тиркеме</h4>
+                <p>
+                  Өтүнмөлөрдү берүү, иштин жүрүшүн фотого тартуу жана реалдуу убакытта офис менен байланышуу үчүн мобилдик тиркемени иштеп чыгуу.
+                </p>
+              </div>
+            </div>
+            <div class="rec-item anim-up d4">
+              <div class="rec-item__icon">
+                <i class="fa-solid fa-chart-line"></i>
+              </div>
+              <div class="rec-item__body">
+                <h4>Автоматташтырылган аналитика</h4>
+                <p>
+                  KPI көзөмөлдөө үчүн BI-дашборддорду киргизүү: курулуш мөөнөттөрү, материалдар чыгымы, бригадалардын өндүрүмдүүлүгү.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="section" id="conclusion">
+        <div class="container container--narrow">
+          <div class="sec-head anim-up">
+            <span class="sec-num">09</span>
+            <h2 class="sec-title">Жыйынтык</h2>
+          </div>
+          <div class="conclusion anim-up d1">
+            <i class="fa-solid fa-quote-left conclusion__icon"></i>
+            <p>
+              Изилдөөнүн жүрүшүндө бизнес-процесстерди моделдөөнүн теориялык негиздери изилденип, негизги методологиялар (BPMN, IDEF0, EPC, DFD) жана аларды колдонуу куралдары каралды.
+            </p>
+            <p>
+              «City House» курулуш компаниясынын мисалында учурдагы бизнес-процесстер анализденип, курулуш материалдарын сатып алуу процесси үчүн As-Is жана To-Be моделдери курулду.
+            </p>
+            <p>
+              Санариптештирүү боюнча сунушталган сунуштар (ERP, ЭДЖ, мобилдик тиркемелерди киргизүү) чыгымдарды кыскартууга, иштерди аткарууну тездетүүгө жана ишкананын атаандаштыкка жөндөмдүүлүгүн жогорулатууга мүмкүнчүлүк берет.
+            </p>
+            <p>
+              <strong>Иштин жаңычылдыгы</strong> изилдөөнүн натыйжаларын көрүнүктүү жана заманбап формада көрсөткөн интерактивдүү веб-сайтты иштеп чыгуудан турат, бул бизнес-аналитика маселелеринде IT-технологияларды практикалык колдонууну көрсөтөт.
+            </p>
+          </div>
+          <div class="finale anim-up d2">
+            <h3>Көңүл бурганыңыздар үчүн рахмат!</h3>
+            <p>Доклад өндүрүштүк практиканын алкагында даярдалды</p>
+          </div>
+        </div>
+      </section>
+      <section class="section section--alt" id="references">
+        <div class="container container--narrow">
+          <div class="sec-head anim-up">
+            <span class="sec-num">10</span>
+            <h2 class="sec-title">Адабияттар тизмеси</h2>
+          </div>
+          <ol class="ref-list anim-up d1">
+            <li>
+              Хаммер М., Чампи Дж. Корпорацияны реинжиниринг кылуу: Бизнестеги революция манифести. — М.: Манн, Иванов жана Фербер, 2011.
+            </li>
+            <li>
+              Репин В.В., Елиферов В.Г. Башкарууга процесстик мамиле. Бизнес-процесстерди моделдөө. — М.: Стандарттар жана сапат, 2013.
+            </li>
+            <li>
+              Шеер А.-В. Бизнес-процесстерди моделдөө. — М.: Күмүш жиптер, 2000.
+            </li>
+            <li>
+              OMG. Business Process Model and Notation (BPMN), Version 2.0. —
+              Object Management Group, 2011.
+            </li>
+            <li>
+              Тельнов Ю.Ф. Бизнес-процесстерди реинжиниринг кылуу. — М.: Финансы жана статистика, 2004.
+            </li>
+            <li>
+              Silver B. BPMN Method and Style. — Cody-Cassidy Press, 2011.
+            </li>
+            <li>
+              Robson M., Ullah P. A Practical Guide to Business Process
+              Reengineering. — Gower Publishing, 2013.
+            </li>
+            <li>
+              ГОСТ Р ИСО 9001-2015. Сапат менеджменти системалары. Талаптар.
+            </li>
+          </ol>
+        </div>
+      </section>
+    </main>
+    <script>
+      window.addEventListener("scroll", function () {
+        var h =
+          document.documentElement.scrollHeight -
+          document.documentElement.clientHeight;
+        var s = window.scrollY || document.documentElement.scrollTop;
+        document.getElementById("progressBar").style.width =
+          (s / h) * 100 + "%";
+      });
+      var io = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) {
+              e.target.classList.add("visible");
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.12 },
+      );
+      document.querySelectorAll(".anim-up").forEach(function (el) {
+        io.observe(el);
+      });
+      var sections = document.querySelectorAll("section");
+      var links = document.querySelectorAll(".sidebar__menu a");
+      window.addEventListener("scroll", function () {
+        var cur = "";
+        sections.forEach(function (sec) {
+          if (window.scrollY >= sec.offsetTop - sec.clientHeight / 3) {
+            cur = sec.id;
+          }
+        });
+        links.forEach(function (a) {
+          a.classList.remove("active");
+          if (a.getAttribute("href") === "#" + cur) a.classList.add("active");
+        });
+      });
+      window.addEventListener("load", function () {
+        document.querySelectorAll(".hero .anim-up").forEach(function (el) {
+          el.classList.add("visible");
+        });
+      });
+      var toggle = document.getElementById("menuToggle");
+      var sidebar = document.getElementById("sidebar");
+      if (toggle) {
+        toggle.addEventListener("click", function () {
+          sidebar.classList.toggle("open");
+        });
+        document.querySelectorAll(".sidebar__menu a").forEach(function (a) {
+          a.addEventListener("click", function () {
+            sidebar.classList.remove("open");
+          });
+        });
+      }
+    </script>
+  </body>
+</html>
